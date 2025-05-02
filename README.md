@@ -54,3 +54,63 @@ project-root/
 │   └── cdf.png
 └── README.md
 ```
+
+---
+
+## Usage
+
+### 1. Setup the Project:
+
+Clone the repository.
+Ensure you have Python installed.
+Install required dependencies using the requirements.txt file.
+
+```bash
+pip install -r requirements.txt
+```
+
+### 2. Generate Random Triangle Data:
+
+```bash
+python3 scripts/01_generate_data.py -n 200000 --seed 42
+```
+
+* `-n`: Number of triangles to simulate (default 100000)
+* `--seed`: Random seed for reproducibility (optional)
+* `-o`: Output CSV path (optional)
+
+### 3. Compute Summary Statistics:
+
+```bash
+python3 scripts/02_compute_statistics.py
+```
+
+* `-i`: Input CSV path (optional)
+* `-o`: Output JSON path for summary statistics (optional)
+
+### 4. Generate Visualizations:
+
+```bash
+python3 scripts/03_visualize_results.py
+```
+
+* `-i`: Input CSV path (optional)
+* `-s`: Summary statistics JSON path (optional)
+* `-o`: Output directory for images (optional)
+
+All generated files (CSV, JSON, PNGs) will be saved into the `outputs/` folder.
+
+---
+
+## Requirements
+
+* Python 3.8+
+* numpy
+* pandas
+* matplotlib
+
+Install all dependencies with:
+
+```bash
+pip install -r requirements.txt
+```
