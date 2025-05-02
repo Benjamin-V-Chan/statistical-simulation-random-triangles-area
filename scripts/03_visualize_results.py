@@ -1,12 +1,29 @@
-# 1. Parse command-line arguments: input CSV path, output directory.
-# 2. Read the CSV of areas.
-# 3. Plot a histogram of “area”:
-#      a. Choose an appropriate number of bins.
-#      b. Label axes, title.
-#      c. Draw a vertical line at the sample mean and theoretical mean.
-#      d. Save as histogram.png.
-# 4. Plot the empirical CDF of “area”:
-#      a. Sort areas.
-#      b. Plot sorted areas vs. (i+1)/n.
-#      c. Label axes, title.
-#      d. Save as cdf.png.
+import argparse, os, json
+import pandas as pd
+import matplotlib.pyplot as plt
+
+def plot_histogram(areas, stats, outpath):
+    plt.figure()
+    plt.hist(areas, bins=50, edgecolor="black")
+    plt.axvline(stats["mean"], linestyle="--", label=f"Sample mean={stats['mean']:.3f}")
+    plt.axvline(stats["theoretical_mean"], color="red", linestyle=":", label="Theoretical mean=0.1667")
+    plt.xlabel("Triangle area")
+    plt.ylabel("Frequency")
+    plt.title("Histogram of Random Triangle Areas")
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(outpath)
+    plt.close()
+
+def plot_cdf(areas, outpath):
+    sorted_areas = sorted(areas)
+    cumprob = [i/len(sorted_areas) for i in range(1, len(sorted_areas)+1)]
+    plt.figure()
+    plt.step(sorted_areas, cumprob, where="post")
+    plt.xlabel("Triangle area")
+    plt.ylabel("Empirical CDF")
+    plt.title("Empirical CDF of Random Triangle Areas")
+    plt.tight_layout()
+    plt.savefig(outpath)
+    plt.close()
+
