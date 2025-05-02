@@ -22,3 +22,17 @@ def compute_stats(areas):
     }
     return stats
 
+def main():
+    p = argparse.ArgumentParser(description="Compute summary stats for triangle areas")
+    p.add_argument("-i", "--input", default="../outputs/triangle_areas.csv", help="input CSV path")
+    p.add_argument("-o", "--output", default="../outputs/summary_stats.json", help="output JSON path")
+    args = p.parse_args()
+
+    os.makedirs(os.path.dirname(args.output), exist_ok=True)
+    df = pd.read_csv(args.input)
+    stats = compute_stats(df["area"].values)
+    with open(args.output, "w") as f:
+        json.dump(stats, f, indent=4)
+
+if __name__ == "__main__":
+    main()
