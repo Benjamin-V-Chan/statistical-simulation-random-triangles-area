@@ -27,3 +27,20 @@ def plot_cdf(areas, outpath):
     plt.savefig(outpath)
     plt.close()
 
+def main():
+    p = argparse.ArgumentParser(description="Visualize triangle area results")
+    p.add_argument("-i", "--input", default="../outputs/triangle_areas.csv", help="input CSV path")
+    p.add_argument("-s", "--stats", default="../outputs/summary_stats.json", help="summary stats JSON")
+    p.add_argument("-o", "--output_dir", default="../outputs", help="output directory")
+    args = p.parse_args()
+
+    os.makedirs(args.output_dir, exist_ok=True)
+    df = pd.read_csv(args.input)
+    with open(args.stats) as f:
+        stats = json.load(f)
+
+    plot_histogram(df["area"].values, stats, os.path.join(args.output_dir, "histogram.png"))
+    plot_cdf(df["area"].values, os.path.join(args.output_dir, "cdf.png"))
+
+if __name__ == "__main__":
+    main()
